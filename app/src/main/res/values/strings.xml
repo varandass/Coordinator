@@ -1,0 +1,28 @@
+<resources>
+    // Название програмы
+    <string name="app_name">Coordinator</string>
+
+    //Названия кнопок
+    <string name="define">DEFINE</string>
+    <string name="preview">PREVIEW</string>
+    <string name="output">OUTPUT</string>
+    <string name="create">CREATE</string>
+
+    //Названия текстовый полей
+    <string name="arc_span">Arc span</string>
+    <string name="increment_angle">Increment angle</string>
+    <string name="center_X">Center X</string>
+    <string name="center_Y">Center Y</string>
+    <string name="bolt_circle_D">Holes axis D</string>
+    <string name="holes_D">Holes D</string>
+    <string name="number_of_holes">Number of holes</string>
+    <string name="start_angle">Start angle</string>
+    <string name="grad">°</string>
+    <string name="mm">mm</string>
+    <string name="pcs">pcs</string>
+
+    //Тосты
+    <string name="toast">0–360°</string>
+
+
+</resources>

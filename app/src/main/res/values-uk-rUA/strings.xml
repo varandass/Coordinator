@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Координатчик</string>
+    <string name="preview">ПЕРЕГЛЯД</string>
+    <string name="output">"ВИВІД "</string>
+    <string name="define">"ВВІД "</string>
+    <string name="arc_span">Дуга</string>
+    <string name="increment_angle">Кут збільшення</string>
+    <string name="center_Y">Центер Y</string>
+    <string name="center_X">Центер X</string>
+    <string name="bolt_circle_D">D осі отворів</string>
+    <string name="holes_D">D отвору</string>
+    <string name="number_of_holes">Кількість отворів</string>
+    <string name="start_angle">Початковий кут</string>
+    <string name="mm">мм</string>
+    <string name="pcs">шт</string>
+    <string name="create">СТВОРИТИ</string>
+    <string name="grad">°</string>
+    <string name="toast">0-360°</string>
+</resources>

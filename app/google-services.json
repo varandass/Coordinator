@@ -1,0 +1,64 @@
+{
+  "project_info": {
+    "project_number": "7566316473",
+    "firebase_url": "https://coordinator-c6abc.firebaseio.com",
+    "project_id": "coordinator-c6abc",
+    "storage_bucket": "coordinator-c6abc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7566316473:android:0cde0f4f51f5e5f6",
+        "android_client_info": {
+          "package_name": "ua.varandas.coordinator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7566316473-vrjvub0rpj1v603rovlqtgnlf43fv56c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ua.varandas.coordinator",
+            "certificate_hash": "9ae07e8cd7cb357837b3b60b58985c1b130f5acc"
+          }
+        },
+        {
+          "client_id": "7566316473-i2o3kuh34et2rfidkvr0u43mhi7d01g3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ua.varandas.coordinator",
+            "certificate_hash": "396533a8fe77b8822d178a6065b2a3af6e79ad92"
+          }
+        },
+        {
+          "client_id": "7566316473-3snkj32pslqkc2utt4dcasam6vjrn5nq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE3vFfhifDzMewDO0OcSrFi36atCQL2Ow"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7566316473-3snkj32pslqkc2utt4dcasam6vjrn5nq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      },
+      "admob_app_id": "ca-app-pub-6163958446304162~1558229454"
+    }
+  ],
+  "configuration_version": "1"
+}
