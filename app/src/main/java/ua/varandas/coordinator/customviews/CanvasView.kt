@@ -14,7 +14,9 @@ import ua.varandas.coordinator.models.CircleModel
 class CanvasView(context: Context) : View(context) {
     companion object {
         private const val TAG = "CanvasView"
+
     }
+    val dip = resources.displayMetrics.scaledDensity
 
     private lateinit var canvas: Canvas
     private var widthX: Int = 0

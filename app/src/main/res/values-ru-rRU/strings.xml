@@ -17,4 +17,6 @@
     <string name="grad">°</string>
     <string name="toast">0–360°</string>
     <string name="create">СОЗДАТЬ</string>
+    <string name="toast_btn_ads">Отключение еще не готово, подождите немного!</string>
+    <string name="reclama_btn">ОТКЛЮЧИТЬ РЕКЛАМУ</string>
 </resources>

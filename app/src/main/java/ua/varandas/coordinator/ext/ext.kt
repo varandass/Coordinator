@@ -1,10 +1,14 @@
 package ua.varandas.coordinator.ext
 
 import android.support.design.widget.TabLayout
-import android.support.v4.app.*
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.widget.EditText
 import org.jetbrains.anko.dip
+import ua.varandas.coordinator.MyAppClass
+import ua.varandas.coordinator.firebase.ads.PreferencesManager
 import kotlin.math.PI
 
 
@@ -19,6 +23,8 @@ fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int) {
 fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
     supportFragmentManager.inTransaction { replace(frameId, fragment) }
 }
+
+val prefs: PreferencesManager by lazy { MyAppClass.sPref!! }
 
 fun EditText.asFloat() = if (text.isEmpty()) 0f else text.toString().toFloat()
 
