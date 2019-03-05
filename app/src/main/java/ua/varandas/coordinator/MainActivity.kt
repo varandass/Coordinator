@@ -1,21 +1,29 @@
 package ua.varandas.coordinator
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.Window
 import android.widget.Button
 import android.widget.Toast
 import com.google.ads.consent.*
 import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.*
+import kotlinx.android.synthetic.main.remove_ads_dialog.view.*
 import org.jetbrains.anko.find
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.setContentView
 import org.jetbrains.anko.support.v4.onPageChangeListener
+import ua.varandas.coordinator.billibng.model.KinAppProductType
+import ua.varandas.coordinator.billibng.model.KinAppPurchase
+import ua.varandas.coordinator.billibng.model.KinAppPurchaseResult
+import ua.varandas.coordinator.billibng.model.managers.KinAppManager
 import ua.varandas.coordinator.ext.prefs
 import ua.varandas.coordinator.firebase.ads.Ads
 import ua.varandas.coordinator.firebase.ads.Ads.mInterstitialAd
@@ -25,9 +33,12 @@ import ua.varandas.coordinator.ui.MainUI
 import java.net.MalformedURLException
 import java.net.URL
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), KinAppManager.KinAppListener {
 
     private val TAG = "MainActivity"
+
+    private val RSA = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlOUn1gbAU1PhwWZh0v8OwFd+E2Ecd7rfj0mrP1QrUNRPjrw83hAV/HdsMq1lna17DKkHtyDVV2JENqGeFRxawehm3uLB82BlZd34ztwiI0ShVX/VssJ6j6TonUxot3S9vCtg1H5t/NQi3vz7WsmIxjZvm50iWf724m1iCna7Kl5iw09OrpvSAf/t5ZFMulyQHQ+6tHahzifLlGH/e7mFIY2uVz1VkMSSRLOs+lSVNgGEoXFffmfdfwtr6qeD5uh0Ns7Dc/NsZTyX0f2MPIV3JdgE+GGPdU1Lq/6zUV8UJ5aZ3fxqTTMClbHsksf4U4mV0XDhqaAahapLbO9NzFwOywIDAQAB"
+    private val product_id = "ads_remove"
 
     private lateinit var mainUI: MainUI
     private lateinit var pager: ViewPager
@@ -35,6 +46,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var privacyURL: URL
     private lateinit var btnADS: Button
     lateinit var form: ConsentForm
+
+    private val billingManager = KinAppManager(this, RSA)
+    private var isBillingReady = false
 
     override fun onStart() {
         super.onStart()
@@ -47,10 +61,86 @@ class MainActivity : AppCompatActivity() {
         mainUI = MainUI()
         mainUI.setContentView(this)
         btnADS = find(IDs.REMOVE_ADS_BTN)
+        billingManager.bind(this)
         configureTabLayout()
         addOrCloseAD()
 
-        btnADS.setOnClickListener { addRevardedAD() }
+        btnADS.setOnClickListener { showAdsDialog() }
+    }
+
+    private fun showAdsDialog() {
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.remove_ads_dialog, null)
+        val builder = AlertDialog.Builder(this).setView(mDialogView)
+        val showDialod = builder.show()
+
+        mDialogView.ads_cancel.setOnClickListener { showDialod.dismiss() }
+        mDialogView.ads_ok.setOnClickListener {
+            val check = mDialogView.radioGroup.checkedRadioButtonId
+            when (check) {
+                R.id.radioFreeRemove -> addRevardedAD()
+                R.id.radioCashRemove -> removeAdsForever()
+            }
+            showDialod.dismiss()
+        }
+    }
+
+    override fun onBillingReady() {
+        isBillingReady = true
+        if (billingManager.isBuy(product_id, KinAppProductType.INAPP)) {
+            prefs.isAdsDisabled = true
+            Ads.disableAds(this)
+        } else {
+            prefs.isAdsDisabled = false
+            Ads.enableAds(this)
+        }
+    }
+
+
+    override fun onPurchaseFinished(purchaseResult: KinAppPurchaseResult, purchase: KinAppPurchase?) {
+        when (purchaseResult) {
+            KinAppPurchaseResult.SUCCESS -> {
+                Log.d(TAG, "Покупка прошла УСПЕШНО")
+                prefs.isAdsDisabled = true
+                Ads.disableAds(this)
+            }
+            KinAppPurchaseResult.ALREADY_OWNED -> {
+                Log.d(TAG, "Продукт уже КУПЛЕН")
+                prefs.isAdsDisabled = true
+                Ads.disableAds(this)
+            }
+            KinAppPurchaseResult.INVALID_PURCHASE -> {
+                Log.d(TAG, "Покупка НЕДЕЙСТВИТЕЛЬНА")
+                prefs.isAdsDisabled = false
+                Ads.enableAds(this)
+            }
+            KinAppPurchaseResult.INVALID_SIGNATURE -> {
+                Log.d(TAG, "Отмечено как НЕДЕЙСТВИТЕЛЬНО")
+                prefs.isAdsDisabled = false
+                Ads.enableAds(this)
+            }
+            KinAppPurchaseResult.CANCEL -> {
+                Log.d(TAG, "Покупка ОТМЕНЕНА пользователем")
+                prefs.isAdsDisabled = false
+                Ads.enableAds(this)
+            }
+        }
+    }
+
+    private fun removeAdsForever() {
+        if (isBillingReady) {
+            billingManager.purchase(this, product_id, KinAppProductType.INAPP)
+        }
+    }
+
+    override fun onDestroy() {
+        billingManager.unbind()
+        super.onDestroy()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (!billingManager.verifyPurchase(requestCode, resultCode, data)) {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
     }
     private fun addRevardedAD() {
         if (Ads.mRewardedVideoAd !== null && Ads.mRewardedVideoAd!!.isLoaded) {

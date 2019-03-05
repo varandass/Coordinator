@@ -19,4 +19,8 @@
     <string name="create">СОЗДАТЬ</string>
     <string name="toast_btn_ads">Отключение еще не готово, подождите немного!</string>
     <string name="reclama_btn">ОТКЛЮЧИТЬ РЕКЛАМУ</string>
+    <string name="ads_free_remove">Посмотреть видео и убрать рекламу на 2 часа!</string>
+    <string name="ads_cash_remove">Убрать рекламу навсегда!</string>
+    <string name="cancel_btn">ОТМЕНА</string>
+    <string name="ok_btn">ОК</string>
 </resources>

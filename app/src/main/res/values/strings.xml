@@ -28,7 +28,11 @@
 
     <string name="banner_ad_unit_id" translatable="false">ca-app-pub-6163958446304162/2816442940</string>
 
-    banner_ad_unit_id
+    <string name="ads_free_remove">Watch the video and remove ads for 2 hours!</string>
+    <string name="ads_cash_remove">Fee to remove ads forever!</string>
+
+    <string name="cancel_btn">CANCEL</string>
+    <string name="ok_btn">OK</string>
 
 
 </resources>

@@ -19,4 +19,8 @@
     <string name="toast">0-360°</string>
     <string name="toast_btn_ads">Відключення ще не готове, почекайте!</string>
     <string name="reclama_btn">ВІДКЛЮЧИТИ РЕКЛАМУ</string>
+    <string name="ads_free_remove">Переглянути відео і вимкнути рекламу на 2 години!</string>
+    <string name="ads_cash_remove">Вимкнути рекламу назавжди!</string>
+    <string name="cancel_btn">ВІДМІНА</string>
+    <string name="ok_btn">ОК</string>
 </resources>
